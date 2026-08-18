@@ -57,6 +57,7 @@ for u, v in graph.edges():
 for u in graph.nodes():
     ha += -Bz * Z(hi, u)
 
+ha = ha.to_jax_operator()   # connected configs generated on-the-fly per chunk on GPU
 
 print("3. Initializing RBM Ansatz (alpha=2)")
 def complex_normal(key, shape, dtype=jnp.complex128):
@@ -76,7 +77,13 @@ ma = nk.models.RBM(
 print("4. Configuring Scheduled Optimizer and Sampler")
 sampler = nk.sampler.MetropolisLocal(hi)
 n_samples_energy = 2**14
-vstate = nk.vqs.MCState(sampler, ma, n_samples=n_samples_energy)
+# Pass chunk_size to break up sample into parts
+vstate = nk.vqs.MCState(
+    sampler, 
+    ma, 
+    n_samples=n_samples_energy, 
+    chunk_size=2**11
+)
 
 print("5. Optimizer with Piecewise Decay Schedule")
 # FIX: Swapped to piecewise_constant to match factors of 10 drops exactly at boundaries
