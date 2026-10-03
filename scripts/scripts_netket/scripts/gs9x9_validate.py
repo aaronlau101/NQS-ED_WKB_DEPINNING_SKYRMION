@@ -28,10 +28,16 @@ ha = nk.operator.LocalOperator(hi, dtype=complex)
 # Pauli Matrices
 X, Y, Z = nk.operator.spin.sigmax, nk.operator.spin.sigmay, nk.operator.spin.sigmaz
 
-# filter_color=0: bonds along x-axis. filter_color=1: bonds along y-axis
-x_edges = graph.edges(filter_color=0)
-y_edges = graph.edges(filter_color=1)
+pos = graph.positions
 
+def orient(u, v, axis):
+    d = pos[v, axis] - pos[u, axis]
+    d = (d + L / 2) % L - L / 2          # minimum-image displacement, gives ±1
+    return (u, v) if d > 0 else (v, u)
+
+# Enforce that every edge tuple (u, v) strictly points in the +x or +y direction
+x_edges = [orient(u, v, 0) for u, v in graph.edges(filter_color=0)]
+y_edges = [orient(u, v, 1) for u, v in graph.edges(filter_color=1)]
 
 # x-directed nearest-neighbor bonds
 # u_ij = x_hat
@@ -106,7 +112,7 @@ ma = nk.models.RBM(
 )
 
 print("4. Configuring Scheduled Optimizer and Sampler")
-sampler = nk.sampler.MetropolisLocal(hi)
+sampler = nk.sampler.MetropolisLocal(hi, sweep_size=graph.n_nodes)
 n_samples_energy = 2**14
 # Pass chunk_size to break up sample into parts
 vstate = nk.vqs.MCState(
