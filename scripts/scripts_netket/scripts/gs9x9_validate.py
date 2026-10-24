@@ -152,3 +152,142 @@ driver.run(
 )
 
 print(f"Optimization Complete. Outputs and weights saved to {log_filename}.*")
+
+# Measure expectation values of sigma_x, sigma_y, sigma_z at each site.
+sx_ops = [X(hi, i) for i in range(graph.n_nodes)]
+sy_ops = [Y(hi, i) for i in range(graph.n_nodes)]
+sz_ops = [Z(hi, i) for i in range(graph.n_nodes)]
+
+mx_vals = np.array(
+    [vstate.expect(op).mean.real for op in sx_ops],
+    dtype=float
+)
+my_vals = np.array(
+    [vstate.expect(op).mean.real for op in sy_ops],
+    dtype=float
+)
+mz_vals = np.array(
+    [vstate.expect(op).mean.real for op in sz_ops],
+    dtype=float
+)
+
+# Explicitly map each site using graph.positions.
+spin_profile = np.zeros((L, L, 3), dtype=float)
+site_seen = np.zeros((L, L), dtype=bool)
+
+for idx, p in enumerate(pos):
+    x, y = map(int, p[:2])
+
+    if not (0 <= x < L and 0 <= y < L):
+        raise ValueError(
+            f"Unexpected lattice coordinate ({x}, {y}) for site {idx}."
+        )
+
+    if site_seen[x, y]:
+        raise ValueError(
+            f"Duplicate lattice coordinate ({x}, {y})."
+        )
+
+    spin_profile[x, y] = [
+        mx_vals[idx],
+        my_vals[idx],
+        mz_vals[idx]
+    ]
+    site_seen[x, y] = True
+
+if not np.all(site_seen):
+    raise ValueError("Some lattice coordinates are missing.")
+
+# Check local expectation-vector magnitudes before normalization.
+norm_m = np.linalg.norm(spin_profile, axis=-1)
+
+print(f"Minimum local spin-vector norm: {norm_m.min():.8e}")
+print(f"Maximum local spin-vector norm: {norm_m.max():.8e}")
+print(
+    "Number of near-zero local vectors:",
+    int(np.sum(norm_m < 1e-10))
+)
+
+# Normalization is undefined for zero or near-zero vectors.
+if np.any(norm_m < 1e-10):
+    raise ValueError(
+        "Cannot reliably compute the normalized spin texture: "
+        "at least one local expectation vector has near-zero magnitude. "
+        "Inspect the spin profile before computing the topological charge."
+    )
+
+m_unit = spin_profile / norm_m[..., None]
+
+# Save raw and normalized spin profiles, including coordinates.
+np.savez(
+    f"spin_profile_{timestamp}.npz",
+    x=pos[:, 0],
+    y=pos[:, 1],
+    raw=spin_profile,
+    unit=m_unit,
+    mx_site=mx_vals,
+    my_site=my_vals,
+    mz_site=mz_vals
+)
+
+# Also save a plain-text spin profile for convenient offline analysis.
+x_grid, y_grid = np.meshgrid(
+    np.arange(L), np.arange(L), indexing="ij"
+)
+
+np.savetxt(
+    f"spin_profile_{timestamp}.txt",
+    np.column_stack((
+        x_grid.ravel(),
+        y_grid.ravel(),
+        spin_profile.reshape(-1, 3)
+    )),
+    header="x y S_x S_y S_z",
+    fmt="%.10f"
+)
+
+print("8. Computing Berg-Luscher Lattice Topological Charge")
+
+def solid_angle(s1, s2, s3):
+    # The inputs are normalized spin vectors.
+    numerator = np.dot(s1, np.cross(s2, s3))
+    denominator = (
+        1.0
+        + np.dot(s1, s2)
+        + np.dot(s2, s3)
+        + np.dot(s3, s1)
+    )
+
+    return 2.0 * np.arctan2(numerator, denominator)
+
+
+Q_total = 0.0
+
+# Periodic boundary conditions.
+# Split each square into two oriented triangles.
+for x in range(L):
+    for y in range(L):
+        p00 = m_unit[x, y]
+        p10 = m_unit[(x + 1) % L, y]
+        p01 = m_unit[x, (y + 1) % L]
+        p11 = m_unit[(x + 1) % L, (y + 1) % L]
+
+        Q_total += solid_angle(p00, p10, p01)
+        Q_total += solid_angle(p11, p01, p10)
+
+Q_skyrmion = Q_total / (4.0 * np.pi)
+
+print(f"Berg-Luscher Skyrmion Number: Q = {Q_skyrmion:.8f}")
+print(f"Nearest Integer: {round(Q_skyrmion)}")
+
+# Save the result and relevant diagnostic information.
+with open(f"skyrmion_number_{timestamp}.txt", "w") as f:
+    f.write(f"Q_skyrmion = {Q_skyrmion:.12f}\n")
+    f.write(f"Nearest integer = {round(Q_skyrmion)}\n")
+    f.write(f"Lattice size = {L}x{L}\n")
+    f.write("Method = Berg-Luscher solid-angle triangulation\n")
+    f.write("Boundary conditions = periodic\n")
+
+print("Post-processing complete.")
+print(f"Spin profiles saved to spin_profile_{timestamp}.npz and .txt")
+print(f"Skyrmion number saved to skyrmion_number_{timestamp}.txt")
