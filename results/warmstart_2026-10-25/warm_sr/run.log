@@ -1,0 +1,82 @@
+/home/laurienzo/miniconda3/envs/netket_gpu/lib/python3.12/site-packages/netket/utils/struct/pytree.py:62: InsufficientSamplesForSRWarning: 
+The number of samples (8192) is less than or equal to the number of parameters (13365).
+
+In this regime, the standard QGT-based SR formulation is inefficient and potentially unstable.
+You should switch to the kernel/minSR formulation by using:
+
+    nk.driver.VMC_SR(hamiltonian, optimizer, diag_shift=0.01, variational_state=your_state)
+
+instead of:
+
+    nk.driver.VMC(hamiltonian, optimizer, preconditioner=nk.optimizer.SR())
+
+VMC_SR automatically chooses the optimal implementation and is always recommended when using SR.
+This provides the same mathematical result but with much better performance and numerical stability.
+
+
+-------------------------------------------------------
+For more detailed informations, visit the following link:
+	 https://netket.readthedocs.io/en/latest/api/_generated/errors/netket.errors.InsufficientSamplesForSRWarning.html
+or the list of all common errors and warnings at
+	 https://netket.readthedocs.io/en/latest/api/errors.html
+-------------------------------------------------------
+
+  obj.__init__(*args, **kwargs)
+[cfg] INIT=warm OPT=sr N_ITER=3000 LR=0.01 DIAG_SHIFT=0.01 N_SAMPLES=8192 CHUNK=2048 SEED=0 TAG=warm_sr
+[env] netket 3.22.3 jax 0.10.2 devices [CudaDevice(id=0)]
+[classical] min over 40 random starts: E_cl=-188.305771 (E/N=-2.324763) Q=2.0000 <nz>=-0.4455  (3.8s)
+[classical] references: |+x> product=-162.00  canted FM=-182.25
+[conv] local_states=[1.0, -1.0] sigmaz diag=[1.0, -1.0] -> up value +1, down value -1
+[init] cold RBM (tiny random weights ~ |+x>^N): E=-161.5854
+[warm] pure product state: E=-188.3465 +- 0.0544  (classical -188.3058)
+[warm] |<sigma> - n_classical| over all sites: max per component (x,y,z)=[0.0227, 0.0254, 0.0245], mean=0.0051
+       site  0: <sigma>=[-0.543, 0.83, -0.126]  classical n=[-0.543, 0.83, -0.128]
+       site 10: <sigma>=[-0.94, 0.219, -0.263]  classical n=[-0.933, 0.218, -0.287]
+       site 40: <sigma>=[-0.218, 0.935, -0.28]  classical n=[-0.218, 0.933, -0.287]
+       site 80: <sigma>=[-0.0, 0.843, -0.538]  classical n=[-0.0, 0.843, -0.538]
+[init] starting point for optimisation: E=-188.1566
+[it      0] E= -188.06310  E/N= -2.32177  var= 24.1768  Rhat= 1.001  acc=0.389  t=    40.3s
+[it    100] E= -189.89912  E/N= -2.34443  var=  7.1671  Rhat= 1.001  acc=0.406  t=   246.7s
+[it    200] E= -190.07339  E/N= -2.34659  var=  3.9237  Rhat= 1.001  acc=0.406  t=   457.3s
+[it    300] E= -190.22597  E/N= -2.34847  var=  2.4902  Rhat= 1.001  acc=0.407  t=   671.1s
+[it    400] E= -190.24590  E/N= -2.34871  var=  3.1789  Rhat= 1.001  acc=0.407  t=   886.1s
+[it    500] E= -190.29491  E/N= -2.34932  var=  2.4335  Rhat= 1.001  acc=0.407  t=  1102.0s
+[it    600] E= -190.30198  E/N= -2.34941  var=  2.7218  Rhat= 1.001  acc=0.407  t=  1318.6s
+[it    700] E= -190.30460  E/N= -2.34944  var=  2.1348  Rhat= 1.001  acc=0.408  t=  1535.7s
+[it    800] E= -190.31484  E/N= -2.34957  var=  4.0681  Rhat= 1.001  acc=0.408  t=  1753.3s
+[it    900] E= -190.34907  E/N= -2.34999  var=  2.1474  Rhat= 1.001  acc=0.407  t=  1971.1s
+[it   1000] E= -190.33853  E/N= -2.34986  var=  1.9247  Rhat= 1.001  acc=0.407  t=  2189.3s
+[it   1100] E= -190.36839  E/N= -2.35023  var=  2.0220  Rhat= 1.001  acc=0.409  t=  2407.6s
+[it   1200] E= -190.36532  E/N= -2.35019  var=  1.9767  Rhat= 1.001  acc=0.407  t=  2626.0s
+[it   1300] E= -190.36772  E/N= -2.35022  var=  3.4091  Rhat= 1.000  acc=0.409  t=  2844.6s
+[it   1400] E= -190.36391  E/N= -2.35017  var=  2.2426  Rhat= 1.001  acc=0.408  t=  3063.3s
+[it   1500] E= -190.36294  E/N= -2.35016  var=  3.1104  Rhat= 1.001  acc=0.407  t=  3282.3s
+[it   1600] E= -190.37604  E/N= -2.35032  var=  2.2138  Rhat= 1.000  acc=0.407  t=  3501.2s
+[it   1700] E= -190.36668  E/N= -2.35021  var=  1.6800  Rhat= 1.001  acc=0.407  t=  3720.3s
+[it   1800] E= -190.39682  E/N= -2.35058  var=  2.1058  Rhat= 1.001  acc=0.408  t=  3939.3s
+[it   1900] E= -190.37011  E/N= -2.35025  var=  1.6992  Rhat= 1.002  acc=0.409  t=  4158.6s
+[it   2000] E= -190.37250  E/N= -2.35028  var=  2.4252  Rhat= 1.001  acc=0.409  t=  4377.7s
+[it   2100] E= -190.40576  E/N= -2.35069  var=  2.2802  Rhat= 1.001  acc=0.408  t=  4597.0s
+[it   2200] E= -190.42187  E/N= -2.35089  var=  2.8250  Rhat= 1.002  acc=0.409  t=  4816.3s
+[it   2300] E= -190.39365  E/N= -2.35054  var=  1.8619  Rhat= 1.001  acc=0.410  t=  5035.8s
+[it   2400] E= -190.40631  E/N= -2.35070  var=  1.9304  Rhat= 1.001  acc=0.408  t=  5255.3s
+[it   2500] E= -190.39190  E/N= -2.35052  var=  2.1679  Rhat= 1.001  acc=0.409  t=  5474.9s
+[it   2600] E= -190.39834  E/N= -2.35060  var=  1.8146  Rhat= 1.002  acc=0.407  t=  5694.5s
+[it   2700] E= -190.42445  E/N= -2.35092  var=  1.6458  Rhat= 1.001  acc=0.407  t=  5914.1s
+[it   2800] E= -190.41342  E/N= -2.35078  var=  1.8990  Rhat= 1.001  acc=0.409  t=  6133.8s
+[it   2900] E= -190.43777  E/N= -2.35108  var=  1.5392  Rhat= 1.001  acc=0.408  t=  6353.4s
+[it   2999] E= -190.41437  E/N= -2.35079  var=  1.7010  Rhat= 1.001  acc=0.408  t=  6570.9s
+[final] E=-190.42545 +- 0.01122  var=1.9899  E/N=-2.35093  vs classical -188.30577  (E - E_cl = -2.1197)
+[final] local |<sigma>|: min=0.9285 max=0.9954 mean=0.9824
+[final] Berg-Luscher Q=2.00000 (classical texture Q=2.0000); cos(angle to classical texture): mean=0.998 min=0.996
+[final] <sigma_z> map (rows=y, cols=x):
+    -0.12  -0.66  -0.88  -0.76  -0.77  -0.87  -0.61  -0.09   0.07
+     0.36  -0.30  -0.79  -0.96  -0.95  -0.75  -0.24   0.43   0.81
+     0.37  -0.29  -0.79  -0.96  -0.95  -0.75  -0.23   0.44   0.84
+    -0.11  -0.63  -0.88  -0.78  -0.79  -0.88  -0.59  -0.06   0.12
+    -0.69  -0.91  -0.63  -0.28  -0.30  -0.66  -0.91  -0.65  -0.52
+    -0.88  -0.65  -0.07   0.38   0.35  -0.14  -0.72  -0.90  -0.89
+    -0.88  -0.50   0.13   0.85   0.80   0.06  -0.55  -0.90  -0.99
+    -0.89  -0.64  -0.05   0.44   0.39  -0.13  -0.69  -0.90  -0.90
+    -0.70  -0.92  -0.59  -0.23  -0.26  -0.63  -0.91  -0.66  -0.54
+[done] {"tag": "warm_sr", "init": "warm", "opt": "sr", "n_iter": 3000, "lr": 0.01, "diag_shift": 0.01, "n_samples": 8192, "seed": 0, "E_classical": -188.30577097687646, "Q_classical": 2.0, "E_cold_init": -161.58537178591516, "E_init": -188.15660757298753, "E_final": -190.42544791671935, "E_final_err": 0.011220618723459625, "var_final": 1.9899220679803313, "E_minus_Ecl": -2.11967693984289, "Q_final": 1.9999999999999998, "cos_to_classical_mean": 0.998495244756268, "cos_to_classical_min": 0.9958742660652339, "local_moment_min": 0.9285322125377447, "local_moment_mean": 0.9824171710203852, "wall_s": 6581.764830112457, "netket": "3.22.3", "log_prefix": "/home/laurienzo/work/skx_warmstart/out/warm_sr/gs9x9_warm_sr_1025_172228"}
