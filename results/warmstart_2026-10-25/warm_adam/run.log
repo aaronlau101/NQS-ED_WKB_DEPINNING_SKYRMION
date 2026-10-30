@@ -1,0 +1,58 @@
+[cfg] INIT=warm OPT=adam N_ITER=3000 LR=0.001 DIAG_SHIFT=0.01 N_SAMPLES=8192 CHUNK=2048 SEED=0 TAG=warm_adam
+[env] netket 3.22.3 jax 0.10.2 devices [CudaDevice(id=0)]
+[classical] min over 40 random starts: E_cl=-188.305771 (E/N=-2.324763) Q=2.0000 <nz>=-0.4455  (3.8s)
+[classical] references: |+x> product=-162.00  canted FM=-182.25
+[conv] local_states=[1.0, -1.0] sigmaz diag=[1.0, -1.0] -> up value +1, down value -1
+[init] cold RBM (tiny random weights ~ |+x>^N): E=-161.5854
+[warm] pure product state: E=-188.3465 +- 0.0544  (classical -188.3058)
+[warm] |<sigma> - n_classical| over all sites: max per component (x,y,z)=[0.0227, 0.0254, 0.0245], mean=0.0051
+       site  0: <sigma>=[-0.543, 0.83, -0.126]  classical n=[-0.543, 0.83, -0.128]
+       site 10: <sigma>=[-0.94, 0.219, -0.263]  classical n=[-0.933, 0.218, -0.287]
+       site 40: <sigma>=[-0.218, 0.935, -0.28]  classical n=[-0.218, 0.933, -0.287]
+       site 80: <sigma>=[-0.0, 0.843, -0.538]  classical n=[-0.0, 0.843, -0.538]
+[init] starting point for optimisation: E=-188.1566
+[it      0] E= -188.06310  E/N= -2.32177  var= 24.1768  Rhat= 1.001  acc=0.389  t=    35.7s
+[it    100] E= -189.67885  E/N= -2.34171  var=  6.2353  Rhat= 1.002  acc=0.404  t=   230.2s
+[it    200] E= -189.85521  E/N= -2.34389  var=  6.6901  Rhat= 1.001  acc=0.406  t=   424.4s
+[it    300] E= -189.89870  E/N= -2.34443  var=  4.2718  Rhat= 1.001  acc=0.405  t=   618.6s
+[it    400] E= -189.89935  E/N= -2.34444  var=  7.0405  Rhat= 1.001  acc=0.405  t=   813.0s
+[it    500] E= -189.88711  E/N= -2.34429  var=  4.7247  Rhat= 1.001  acc=0.405  t=  1007.3s
+[it    600] E= -189.88599  E/N= -2.34427  var=  7.7299  Rhat= 1.001  acc=0.405  t=  1201.6s
+[it    700] E= -189.93000  E/N= -2.34481  var=  4.2070  Rhat= 1.000  acc=0.405  t=  1396.0s
+[it    800] E= -189.91950  E/N= -2.34469  var=  4.6673  Rhat= 1.001  acc=0.406  t=  1590.3s
+[it    900] E= -189.91895  E/N= -2.34468  var=  5.7390  Rhat= 1.001  acc=0.404  t=  1784.8s
+[it   1000] E= -189.88581  E/N= -2.34427  var=  4.7207  Rhat= 1.001  acc=0.404  t=  1979.2s
+[it   1100] E= -189.91668  E/N= -2.34465  var=  8.7446  Rhat= 1.001  acc=0.406  t=  2173.5s
+[it   1200] E= -189.93423  E/N= -2.34487  var=  4.3010  Rhat= 1.001  acc=0.404  t=  2368.0s
+[it   1300] E= -189.92539  E/N= -2.34476  var=  4.5617  Rhat= 1.000  acc=0.407  t=  2562.6s
+[it   1400] E= -189.94077  E/N= -2.34495  var=  6.6455  Rhat= 1.002  acc=0.405  t=  2757.3s
+[it   1500] E= -189.94697  E/N= -2.34502  var=  8.0000  Rhat= 1.001  acc=0.405  t=  2951.7s
+[it   1600] E= -189.95804  E/N= -2.34516  var=  3.6418  Rhat= 1.001  acc=0.405  t=  3146.5s
+[it   1700] E= -189.96427  E/N= -2.34524  var=  4.1482  Rhat= 1.001  acc=0.406  t=  3341.0s
+[it   1800] E= -189.94661  E/N= -2.34502  var=  4.4690  Rhat= 1.001  acc=0.404  t=  3535.9s
+[it   1900] E= -189.95830  E/N= -2.34516  var=  6.2925  Rhat= 1.000  acc=0.406  t=  3730.8s
+[it   2000] E= -189.94751  E/N= -2.34503  var=  4.5430  Rhat= 1.001  acc=0.407  t=  3925.2s
+[it   2100] E= -189.97199  E/N= -2.34533  var=  4.7069  Rhat= 1.001  acc=0.406  t=  4119.6s
+[it   2200] E= -189.99411  E/N= -2.34561  var=  5.6842  Rhat= 1.001  acc=0.406  t=  4314.7s
+[it   2300] E= -190.01174  E/N= -2.34582  var=  6.0865  Rhat= 1.001  acc=0.408  t=  4509.3s
+[it   2400] E= -190.01449  E/N= -2.34586  var=  4.6193  Rhat= 1.002  acc=0.407  t=  4704.6s
+[it   2500] E= -190.02717  E/N= -2.34601  var= 17.0165  Rhat= 1.001  acc=0.407  t=  4899.8s
+[it   2600] E= -190.05919  E/N= -2.34641  var=  3.5868  Rhat= 1.001  acc=0.405  t=  5094.9s
+[it   2700] E= -190.08652  E/N= -2.34675  var=  3.9794  Rhat= 1.001  acc=0.406  t=  5290.1s
+[it   2800] E= -190.10423  E/N= -2.34697  var=  3.8066  Rhat= 1.000  acc=0.407  t=  5485.4s
+[it   2900] E= -190.15446  E/N= -2.34759  var=  4.9955  Rhat= 1.001  acc=0.406  t=  5680.6s
+[it   2999] E= -190.14565  E/N= -2.34748  var=  3.4587  Rhat= 1.001  acc=0.408  t=  5873.9s
+[final] E=-190.16336 +- 0.01545  var=3.7264  E/N=-2.34770  vs classical -188.30577  (E - E_cl = -1.8576)
+[final] local |<sigma>|: min=0.9529 max=0.9976 mean=0.9894
+[final] Berg-Luscher Q=2.00000 (classical texture Q=2.0000); cos(angle to classical texture): mean=0.988 min=0.960
+[final] <sigma_z> map (rows=y, cols=x):
+    -0.16  -0.71  -0.88  -0.78  -0.82  -0.88  -0.49   0.00   0.11
+     0.29  -0.39  -0.84  -0.98  -0.94  -0.67  -0.13   0.57   0.82
+     0.24  -0.39  -0.85  -0.96  -0.94  -0.70  -0.13   0.51   0.78
+    -0.21  -0.75  -0.89  -0.74  -0.79  -0.90  -0.51  -0.02   0.09
+    -0.76  -0.92  -0.51  -0.22  -0.28  -0.71  -0.91  -0.63  -0.55
+    -0.88  -0.55   0.04   0.45   0.36  -0.21  -0.79  -0.91  -0.91
+    -0.85  -0.41   0.25   0.93   0.70  -0.06  -0.65  -0.94  -0.99
+    -0.87  -0.57   0.03   0.45   0.31  -0.25  -0.79  -0.90  -0.89
+    -0.73  -0.94  -0.54  -0.24  -0.32  -0.75  -0.90  -0.59  -0.50
+[done] {"tag": "warm_adam", "init": "warm", "opt": "adam", "n_iter": 3000, "lr": 0.001, "diag_shift": 0.01, "n_samples": 8192, "seed": 0, "E_classical": -188.30577097687646, "Q_classical": 2.0, "E_cold_init": -161.58537178591516, "E_init": -188.15660757298753, "E_final": -190.16336092105362, "E_final_err": 0.015446898763089438, "var_final": 3.726422386709314, "E_minus_Ecl": -1.857589944177164, "Q_final": 2.0000000000000004, "cos_to_classical_mean": 0.987614692858484, "cos_to_classical_min": 0.9597353257571217, "local_moment_min": 0.952938170564345, "local_moment_mean": 0.9894482641492159, "wall_s": 5883.909193754196, "netket": "3.22.3", "log_prefix": "/home/laurienzo/work/skx_warmstart/out/warm_adam/gs9x9_warm_adam_1025_172314"}
